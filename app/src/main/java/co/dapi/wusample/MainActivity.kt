@@ -168,6 +168,10 @@ class MainActivity : AppCompatActivity() {
                 account: DapiAccountsResponse.DapiAccount?,
                 error: DapiError
             ) {
+                if (error.type == DapiError.BENEFICIARY_COOL_DOWN_PERIOD) {
+                    scheduleCooldownPeriodNotification()
+                }
+
                 Log.e(
                     "DapiError",
                     "Transfer failed from $account\n" +
@@ -190,6 +194,17 @@ class MainActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun scheduleCooldownPeriodNotification() {
+        selectedConnection!!.getAccountsMetaData({
+            val coolDownPeriod = it.accountsMetadata.beneficiaryCoolDownPeriod
+            val unit = coolDownPeriod.unit
+            val value = coolDownPeriod.value
+            Log.e("DapiError", "Beneficiary creation will take $value $unit")
+        }, {
+            Log.e("DapiError", it.message!!)
+        })
     }
 
     private fun Button.disable() {
