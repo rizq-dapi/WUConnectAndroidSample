@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
         initConnectionsSpinner()
     }
 
+
     private fun setConnectionsSpinnerItemSelectedListener() {
         binding.spinner.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
@@ -59,10 +60,12 @@ class MainActivity : AppCompatActivity() {
             }
     }
 
+    //Filter connections with name
+    //Dapi.getConnections() returns connections (logged in bank accounts) for the current user (clientUserID)
     private fun selectConnection(name: String) {
         Dapi.getConnections({
             selectedConnection =
-                it.filter { it.name == name }.toMutableList().firstOrNull()
+                it.firstOrNull { it.name == name }
         }, {
             Log.e("DapiError", it.message!!)
         })
@@ -83,12 +86,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Navigate to banks screen
     private fun openBanksActivity() {
         Intent(this, BanksActivity::class.java).apply {
             startActivity(this)
         }
     }
 
+    //Populates the spinner with connection names fetched from Dapi.getConnections()
+    //Dapi.getConnections() returns connections (logged in bank accounts) for the current user (clientUserID)
     private fun initConnectionsSpinner() {
         Dapi.getConnections({
             if (it.isEmpty()) {
@@ -113,6 +119,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    //Opens Dapi accounts screen to select an account and make the transfer
     private fun createTransfer(
         connection: DapiConnection,
         amount: Double,
@@ -128,6 +135,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Create DapiBeneficiary
     private fun getSandboxBeneficiary(): DapiBeneficiary {
         val lineAddress = LinesAddress()
         lineAddress.line1 = "baniyas road"
@@ -149,6 +157,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    //Set transfer listener to get callbacks for any transfer
     private fun setTransferListener() {
         Dapi.transferListener = object : OnDapiTransferListener {
             override fun onTransferSuccess(
@@ -196,6 +205,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //Schedule a notification for coolDownPeriod fetched from getAccountsMetaData API.
+    //Add your implementation for the notification
     private fun scheduleCooldownPeriodNotification() {
         selectedConnection!!.getAccountsMetaData({
             val coolDownPeriod = it.accountsMetadata.beneficiaryCoolDownPeriod

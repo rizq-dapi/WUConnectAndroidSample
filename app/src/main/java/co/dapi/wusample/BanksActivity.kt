@@ -25,6 +25,7 @@ class BanksActivity : AppCompatActivity(), BanksAdapter.OnBankClickListener {
         presentConnect(bankID)
     }
 
+    //Set connectListener to get callbacks for connection attempts
     private fun setConnectListener() {
         Dapi.connectListener = object : OnDapiConnectListener {
             override fun onConnectionSuccessful(connection: DapiConnection) {
@@ -64,6 +65,7 @@ class BanksActivity : AppCompatActivity(), BanksAdapter.OnBankClickListener {
         binding.rvBanks.adapter = adapter
     }
 
+    //Display Dapi login screen for bankID
     private fun presentConnect(bankID: String) {
         if (Dapi.isStarted) {
             Dapi.presentConnect(bankID)
