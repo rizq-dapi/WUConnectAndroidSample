@@ -16,6 +16,7 @@ class WUApplication : Application() {
             clientUserID = "currentLoggedInWUUser.id", //Used to distinguish between different users on the same device
             configurations = DapiConfigurations(
                 environment = DapiEnvironment.SANDBOX,
+                showAddButton = false,
                 countries = arrayOf("AE", "EG"),
                 extraHeaderFields = hashMapOf(Pair("key", "value")), //Added to all requests
                 extraQueryParameters = hashMapOf(Pair("key", "value")), //Added to all requests

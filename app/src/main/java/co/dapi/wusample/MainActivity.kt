@@ -138,22 +138,22 @@ class MainActivity : AppCompatActivity() {
     //Create DapiBeneficiary
     private fun getSandboxBeneficiary(): DapiBeneficiary {
         val lineAddress = LinesAddress()
-        lineAddress.line1 = "baniyas road"
-        lineAddress.line2 = "dubai"
-        lineAddress.line3 = "united arab emirates"
+        lineAddress.line1 = ""
+        lineAddress.line2 = ""
+        lineAddress.line3 = ""
 
         return DapiBeneficiary(
             address = lineAddress,
-            accountNumber = "2568749867",
-            name = "John Doe",
-            bankName = "STANDARD CHARTERED BANK",
-            swiftCode = "SCBLAEAD",
-            iban = "AE0000000000002568749867",
-            country = "AE",
-            branchAddress = "Dubai Mall",
-            branchName = "Dubai Mall",
-            phoneNumber = "0581234567",
-            nickname = "nickname"
+            accountNumber = "",
+            name = "",
+            bankName = "",
+            swiftCode = "",
+            iban = "",
+            country = "",
+            branchAddress = "",
+            branchName = "",
+            phoneNumber = "",
+            nickname = ""
         )
     }
 
