@@ -33,7 +33,7 @@ class BanksActivity : AppCompatActivity(), BanksAdapter.OnBankClickListener {
                 Log.i("Dapi", "Successfully connected: ${connection.toString()}")
             }
 
-            override fun onConnectionFailure(error: DapiError, bankID: String) {
+            override fun onConnectionFailure(error: DapiError, bankID: String?) {
                 finish()
                 Log.e("DapiError", "Connection failed $bankID with error: ${error.message}")
             }

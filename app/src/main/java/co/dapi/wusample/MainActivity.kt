@@ -163,7 +163,8 @@ class MainActivity : AppCompatActivity() {
             override fun onTransferSuccess(
                 account: DapiAccountsResponse.DapiAccount,
                 amount: Double,
-                reference: String?
+                reference: String?,
+                operationID: String?
             ) {
                 Log.i(
                     "Dapi",
