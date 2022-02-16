@@ -12,7 +12,7 @@ class WUApplication : Application() {
         super.onCreate()
         Dapi.start(
             application = this,
-            appKey = "c4005ee6f03e90d0c1a82d602f425cbcd8a058a1f2879fa2216f1ef33ce99f93", //On the dashboard
+            appKey = "1d4592c4a8dd6ff75261e57eb3f80c518d7857d6617769af3f8f04b0590baceb", //On the dashboard
             clientUserID = "currentLoggedInWUUser.id", //Used to distinguish between different users on the same device
             configurations = DapiConfigurations(
                 environment = DapiEnvironment.SANDBOX,

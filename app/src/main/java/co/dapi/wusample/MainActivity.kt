@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import co.dapi.connect.core.base.Dapi
+import co.dapi.connect.core.callbacks.OnDapiConnectListener
 import co.dapi.connect.core.callbacks.OnDapiTransferListener
 import co.dapi.connect.data.endpoint_models.DapiAccountsResponse
 import co.dapi.connect.data.models.DapiBeneficiary
@@ -30,6 +31,29 @@ class MainActivity : AppCompatActivity() {
         setTransferButtonClickListener()
         setConnectionsSpinnerItemSelectedListener()
         setRecipientAccountNumber()
+        setConnectListener()
+    }
+
+    //Set connectListener to get callbacks for connection attempts
+    private fun setConnectListener() {
+        Dapi.connectListener = object : OnDapiConnectListener {
+            override fun onConnectionSuccessful(connection: DapiConnection) {
+                Log.i("Dapi", "Successfully connected: ${connection.toString()}")
+            }
+
+            override fun onConnectionFailure(error: DapiError, bankID: String?) {
+                Log.e("DapiError", "Connection failed $bankID with error: ${error.message}")
+            }
+
+            override fun onBankRequest(bankName: String, iban: String) {
+
+            }
+
+            override fun onDismissed() {
+                Log.i("Dapi", "Connect UI is dismissed")
+            }
+
+        }
     }
 
     private fun setRecipientAccountNumber() {
@@ -74,14 +98,23 @@ class MainActivity : AppCompatActivity() {
 
     private fun setConnectButtonClickListener() {
         binding.btnConnect.setOnClickListener {
-            openBanksActivity()
+//            openBanksActivity()
+            if (Dapi.isStarted) Dapi.presentConnect()
         }
     }
 
     private fun setTransferButtonClickListener() {
         binding.btnTransfer.setOnClickListener {
             if (selectedConnection != null) {
-                createTransfer(selectedConnection!!, 100.0, getSandboxBeneficiary())
+                var amount = 0.0
+                if (binding.etAmountValue.text.toString().toDoubleOrNull() != null) {
+                    amount = binding.etAmountValue.text.toString().toDouble()
+                }
+                createTransfer(
+                    selectedConnection!!,
+                    amount,
+                    getSandboxBeneficiary()
+                )
             }
         }
     }
@@ -138,22 +171,22 @@ class MainActivity : AppCompatActivity() {
     //Create DapiBeneficiary
     private fun getSandboxBeneficiary(): DapiBeneficiary {
         val lineAddress = LinesAddress()
-        lineAddress.line1 = ""
-        lineAddress.line2 = ""
-        lineAddress.line3 = ""
+        lineAddress.line1 = "baniyas road"
+        lineAddress.line2 = "dubai"
+        lineAddress.line3 = "united arab emirates"
 
         return DapiBeneficiary(
             address = lineAddress,
-            accountNumber = "",
-            name = "",
-            bankName = "",
-            swiftCode = "",
-            iban = "",
-            country = "",
-            branchAddress = "",
-            branchName = "",
-            phoneNumber = "",
-            nickname = ""
+            accountNumber = "1634941622293309958530",
+            name = "name",
+            bankName = "bankName",
+            swiftCode = "DAPIBANK",
+            iban = "DAPIBANKAELIV1634941622293309958530",
+            country = "AE",
+            branchAddress = "branchAddress",
+            branchName = "branchName",
+            phoneNumber = "xxxxxxxxxxx",
+            nickname = "nickname"
         )
     }
 

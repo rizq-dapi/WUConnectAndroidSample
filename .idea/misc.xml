@@ -6,6 +6,7 @@
         <entry key="app/src/main/res/layout/activity_banks.xml" value="0.37907608695652173" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2572463768115942" />
         <entry key="app/src/main/res/layout/bank_item.xml" value="0.2572463768115942" />
+        <entry key="app/src/main/res/layout/item_bank.xml" value="0.40625" />
       </map>
     </option>
   </component>
